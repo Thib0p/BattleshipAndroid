@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import battleships.formation.excilys.com.battleships.R;
 
 public class PlayerNameActivity extends AppCompatActivity {
@@ -22,7 +20,8 @@ public class PlayerNameActivity extends AppCompatActivity {
         String name = mNameEditText.getText().toString();
         if (!name.isEmpty()) {
            /* do stuff */
-            Toast.makeText(PlayerNameActivity.this, name, Toast.LENGTH_LONG).show();
+            //Toast.makeText(PlayerNameActivity.this, name, Toast.LENGTH_LONG).show();
+            BattleShipsApplication.getGame().init(name);
         }
     }
 }
