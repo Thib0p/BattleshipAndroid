@@ -1,10 +1,12 @@
 package com.excilys.formation.battleships.android.ui;
 
 import android.app.Application;
+import android.content.Intent;
 
 import com.excilys.formation.battleships.AIPlayer;
 import com.excilys.formation.battleships.Board;
 import com.excilys.formation.battleships.Player;
+import com.excilys.formation.battleships.android.ui.ships.*;
 import com.excilys.formation.battleships.ship.AbstractShip;
 
 import java.util.Arrays;
@@ -27,6 +29,7 @@ public class BattleShipsApplication extends Application {
      * Lifecycle
      */
     // ...
+    @Override
     public void onCreate()
     {
         mGame = new Game();
@@ -66,8 +69,8 @@ public class BattleShipsApplication extends Application {
             mBoard = new BoardController(b);
             mOpponentBoard = new Board("IA");
 
-            mPlayer1 = new Player(b, mOpponentBoard, createDefaultShips());
-            mPlayer2 = new AIPlayer(mOpponentBoard, b, createDefaultShips());
+            mPlayer1 = new AndroidPlayer(b, mOpponentBoard, createDefaultShips());
+            mPlayer2 = new AndroidPlayer(mOpponentBoard, b, createDefaultShips());
 
             // place player ships
             mPlayer1.putShips();
@@ -80,9 +83,19 @@ public class BattleShipsApplication extends Application {
         private List<AbstractShip> createDefaultShips() {
             AbstractShip[] ships = new AbstractShip[0];
 
-            // TODO uncomment me
-            // ships = new AbstractShip[]{new DrawableDestroyer(), new DrawableSubmarine(), new DrawableSubmarine(), new DrawableBattleship(), new DrawableCarrier()};
+            ships = new AbstractShip[]{new DrawableDestroyer(), new DrawableSubmarine(), new DrawableSubmarine(), new DrawableBattleship(), new DrawableCarrier()};
             return Arrays.asList(ships);
+        }
+    }
+    public class AndroidPlayer extends Player{
+        public AndroidPlayer(Board board, Board opponentBoard, List<AbstractShip> ships) {
+            super(board, opponentBoard, ships);
+        }
+
+        @Override
+        public void putShips() {
+            Intent intent = new Intent(BattleShipsApplication.this,PutShipsActivity.class);
+            startActivity(intent);
         }
     }
 }
