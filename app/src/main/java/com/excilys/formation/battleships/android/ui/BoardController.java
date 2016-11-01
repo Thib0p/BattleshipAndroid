@@ -1,5 +1,6 @@
 package com.excilys.formation.battleships.android.ui;
 
+import com.excilys.formation.battleships.FunctionHelpers;
 import com.excilys.formation.battleships.IBoard;
 import com.excilys.formation.battleships.android.ui.ships.DrawableShip;
 import com.excilys.formation.battleships.ship.AbstractShip;
@@ -44,9 +45,16 @@ public class BoardController implements IBoard {
 
 
     @Override
-    public Hit sendHit(int x, int y) {
-        // TODO decor me
-        return null;
+    public Hit sendHit(int x, int y) throws FunctionHelpers.ShipAlreadyStruck {
+        Hit h = mBoard.sendHit(x,y);
+        if(h.equals(Hit.STRIKE)) {
+            mShipsFragment.putDrawable(R.drawable.hit, x, y);
+        }
+        else
+        {
+            mShipsFragment.putDrawable(R.drawable.miss, x, y);
+        }
+        return h;
     }
 
     @Override
@@ -60,39 +68,48 @@ public class BoardController implements IBoard {
             throw new IllegalArgumentException("Cannot put a Ship that does not implement DrawableShip.");
         }
 
-        // TODO this may be usefull
-//        AbstractShip.Orientation orientation = ship.getOrientation();
-//        switch (orientation) {
-//            case NORTH:
-//                y = y - ship.getLength() + 1;
-//                break;
-//            case WEST:
-//                x = x - ship.getLength() + 1;
-//                break;
-//
-//        }
+
+        AbstractShip.Orientation orientation = ship.getShipOrientation();
+        switch (orientation) {
+            case NORTH:
+                y = y - ship.getSize() + 1;
+                break;
+            case WEST:
+                x = x - ship.getSize() + 1;
+                break;
+
+        }
+        mBoard.putShip(ship,y,x);
+        mShipsFragment.putDrawable(((DrawableShip) ship).getDrawable(),x,y);
+
     }
 
     @Override
     public Boolean canPutShip(AbstractShip ship, int x, int y)
     {
-        // TODO
-        return true;
+        return mBoard.canPutShip(ship,x,y);
     }
     @Override
     public boolean hasShip(int x, int y) {
-        // TODO
-        return false;
+        return mBoard.hasShip(x,y);
     }
 
     @Override
     public void setHit(boolean hit, int x, int y) {
-        // TODO decore me
+        mBoard.setHit(hit,x,y);
+        if(hit) {
+            mShipsFragment.putDrawable(R.drawable.hit, x, y);
+        }
+        else
+        {
+            mShipsFragment.putDrawable(R.drawable.miss, x, y);
+        }
+
+
     }
 
     @Override
     public Boolean getHit(int x, int y) {
-        // TODO
-        return false;
+        return mBoard.getHit(x,y);
     }
 }
