@@ -70,6 +70,7 @@ public class BoardController implements IBoard {
 
 
         AbstractShip.Orientation orientation = ship.getShipOrientation();
+        mBoard.putShip(ship,y+1,x);
         switch (orientation) {
             case NORTH:
                 y = y - ship.getSize() + 1;
@@ -79,7 +80,6 @@ public class BoardController implements IBoard {
                 break;
 
         }
-        mBoard.putShip(ship,y,x);
         mShipsFragment.putDrawable(((DrawableShip) ship).getDrawable(),x,y);
 
     }
