@@ -47,19 +47,12 @@ public class BoardController implements IBoard {
     @Override
     public Hit sendHit(int x, int y) throws FunctionHelpers.ShipAlreadyStruck {
         Hit h = mBoard.sendHit(x,y);
-        if(h.equals(Hit.STRIKE)) {
-            mShipsFragment.putDrawable(R.drawable.hit, x, y);
-        }
-        else
-        {
-            mShipsFragment.putDrawable(R.drawable.miss, x, y);
-        }
         return h;
     }
 
     @Override
     public int getSize() {
-        return 10;
+        return mBoard.getSize();
     }
 
     @Override
@@ -70,7 +63,7 @@ public class BoardController implements IBoard {
 
 
         AbstractShip.Orientation orientation = ship.getShipOrientation();
-        mBoard.putShip(ship,y+1,x);
+        mBoard.putShip(ship,y,x); //TODO change value of x,y to column line
         switch (orientation) {
             case NORTH:
                 y = y - ship.getSize() + 1;
@@ -98,11 +91,11 @@ public class BoardController implements IBoard {
     public void setHit(boolean hit, int x, int y) {
         mBoard.setHit(hit,x,y);
         if(hit) {
-            mShipsFragment.putDrawable(R.drawable.hit, x, y);
+            mHitsFragment.putDrawable(R.drawable.hit, x, y);
         }
         else
         {
-            mShipsFragment.putDrawable(R.drawable.miss, x, y);
+            mHitsFragment.putDrawable(R.drawable.miss, x, y);
         }
 
 

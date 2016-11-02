@@ -70,7 +70,7 @@ public class BattleShipsApplication extends Application {
             mOpponentBoard = new Board("IA");
 
             mPlayer1 = new AndroidPlayer(b, mOpponentBoard, createDefaultShips());
-            mPlayer2 = new AndroidPlayer(mOpponentBoard, b, createDefaultShips());
+            mPlayer2 = new AIPlayer(mOpponentBoard, b, createDefaultShips());
 
             // place player ships
             mPlayer1.putShips();
