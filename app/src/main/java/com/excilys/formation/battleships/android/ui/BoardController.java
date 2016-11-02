@@ -40,7 +40,7 @@ public class BoardController implements IBoard {
     }
 
     public void displayHitInShipBoard(boolean hit, int x, int y) {
-        mShipsFragment.putDrawable(hit ? R.drawable.hit : R.drawable.miss, x, y);
+        mShipsFragment.putDrawable(hit ? R.drawable.hit : R.drawable.miss, y, x);
     }
 
 
