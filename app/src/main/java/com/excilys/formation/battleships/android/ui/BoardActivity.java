@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.excilys.formation.battleships.Board;
 import com.excilys.formation.battleships.FunctionHelpers;
@@ -22,8 +23,20 @@ import java.util.Locale;
 import battleships.formation.excilys.com.battleships.R;
 
 
-public class BoardActivity extends AppCompatActivity {
+public class BoardActivity extends AppCompatActivity
+    implements BoardGridFragment.BoardGridFragmentListener{
     private static final String TAG = BoardActivity.class.getSimpleName();
+
+    @Override
+    public void onTileClick(int id, int x, int y) {
+        if(id==BoardController.HITS_FRAGMENT){
+           try {
+               doPlayerTurn(x,y);
+           } catch (FunctionHelpers.ShipAlreadyStruck e){
+               Toast.makeText(this, R.string.already_struck_error, Toast.LENGTH_LONG).show();
+           }
+        }
+    }
 
     private static class Default {
         private static final int TURN_DELAY = 1000; // ms
@@ -69,7 +82,7 @@ public class BoardActivity extends AppCompatActivity {
         mOpponent = BattleShipsApplication.getPlayers()[1];
     }
 
-    // TODO call me maybe
+    // Hey I just met you, and this is craaazy but here's my number, so call me maybe !
     private void doPlayerTurn(int x, int y) throws FunctionHelpers.ShipAlreadyStruck{
         mPlayerTurn = false;
         Hit hit = mOpponentBoard.sendHit(x, y);
@@ -85,6 +98,7 @@ public class BoardActivity extends AppCompatActivity {
             }
         } else {
             // TODO sleep a while...
+            sleep(1000);
             mViewPager.setCurrentItem(BoardController.SHIPS_FRAGMENT);
             mViewPager.setEnableSwipe(false);
             doOpponentTurn();

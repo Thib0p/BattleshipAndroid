@@ -198,7 +198,7 @@ public class BoardGridFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface BoardGridFragmentListener {
-        void onTileClick(int id, int x, int y);
+        void onTileClick(int id, int x, int y) ;
     }
 
     /* ***
