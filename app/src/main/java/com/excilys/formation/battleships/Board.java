@@ -85,7 +85,7 @@ public class Board implements IBoard {
 	public Boolean canPutShip(AbstractShip ship, int x, int y) {
 		switch (ship.getShipOrientation()) {
 		case NORTH:
-			if (x - ship.getSize() < 0)
+			if (x - ship.getSize() < -1)
 				return false;
 			for (int i = 0; i < ship.getSize(); i++) {
 				if (ships[x - i][y] != null)
@@ -109,7 +109,7 @@ public class Board implements IBoard {
 			}
 			break;
 		case WEST:
-			if (y - ship.getSize() < 0)
+			if (y - ship.getSize() < -1)
 				return false;
 			for (int i = 0; i < ship.getSize(); i++) {
 				if (ships[x][y - i] != null)
